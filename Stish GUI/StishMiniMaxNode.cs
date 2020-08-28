@@ -104,6 +104,7 @@ namespace Stish_GUI
         private uint MeBarracksHealth;
         private uint MeUnitHealth;
         private uint MeBaseHealth;
+        private uint MeBaseNumber;
         private uint MeBarracksNumber;
         private uint MeBalance;
 
@@ -112,6 +113,7 @@ namespace Stish_GUI
         private uint OpBarracksHealth;
         private uint OpUnitHealth;
         private uint OpBaseHealth;
+        private uint OpBaseNumber;
         private uint OpBarracksNumber;
         private uint OpBalance;
 
@@ -141,17 +143,19 @@ namespace Stish_GUI
             MeBarracksHealth = PassedBoardState.Counting("Barracks", Me, false);
             MeUnitHealth = PassedBoardState.Counting("Unit", Me, false);
             MeBaseHealth = PassedBoardState.Counting("Base", Me, false);
+            MeBaseNumber = PassedBoardState.Counting("Base", Me, true);
 
             UnitProximity = PassedBoardState.DistanceValuation(Me, Oppenent);
 
             OpBarracksNumber = PassedBoardState.Counting("Barracks", Oppenent, true);
             OpBaseHealth = PassedBoardState.Counting("Base", Oppenent, false);
+            OpBaseNumber = PassedBoardState.Counting("Base", Oppenent, true);
             OpBarracksHealth = PassedBoardState.Counting("Barracks", Oppenent, false);
             OpUnitHealth = PassedBoardState.Counting("Unit", Oppenent, false);   
 
             //at 14/03/19 constants were:  30,10,6,3,25,1
             //formula for unit proximity was changed to be cumulative so the constant is now very high
-            Value = (30 * UnitProximity) + (10 * ((int)MeBarracksNumber - (int)OpBarracksNumber)) + (6 * ((int)MeBarracksHealth - (int)OpBarracksHealth)) + (3 * ((int)MeUnitHealth - (int)OpUnitHealth)) + (25 * ((int)MeBaseHealth - (int)OpBaseHealth)) + (1 * ((int)MeBalance - (int)OpBalance));
+            Value = (1000000000000 * ((int)MeBaseNumber - (int)OpBaseNumber)) + (30 * UnitProximity) + (12 * ((int)MeBarracksNumber - (int)OpBarracksNumber)) + (6 * ((int)MeBarracksHealth - (int)OpBarracksHealth)) + (3 * ((int)MeUnitHealth - (int)OpUnitHealth)) + (28 * ((int)MeBaseHealth - (int)OpBaseHealth)) + (1 * ((int)MeBalance - (int)OpBalance));
 
             if (MeBaseHealth < 1)
             {
